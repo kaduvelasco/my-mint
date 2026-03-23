@@ -1,4 +1,4 @@
-# My Mint
+# Manager Linux
 
 > Painel de controle pessoal para pós-instalação e manutenção do Linux Mint 22.x
 
@@ -10,21 +10,20 @@ Este é um projeto **pessoal**, criado para atender às minhas próprias necessi
 
 O `manager.sh` é o ponto de entrada: um menu interativo que organiza todas as tarefas em scripts especializados.
 
-| Opção | Script                          | Função                                                     |
-| ----- | ------------------------------- | ---------------------------------------------------------- |
-| 1     | `pos-instalacao/pos-install.sh` | Pós-instalação completa (APT, Flatpak, drivers)            |
-| 2     | `pos-instalacao/modelos.sh`     | Cria modelos de arquivo no Nemo (Office, PHP, HTML, Shell) |
-| 3     | `apps-install/mint-pro.sh`      | Otimização de performance e gaming (AMD/Vulkan)            |
-| 4     | `apps-install/apps-manager.sh`  | Gestão de apps, limpeza profunda, sync de temas GTK        |
-| 5     | `apps-install/apps-install.sh`  | Loja customizada de Flatpaks                               |
-| 6     | `manager.sh`                    | Instala `update-system` como comando global                |
+| Opção | Script | Função |
+|-------|--------|--------|
+| 1 | `pos-instalacao/pos-install.sh` | Pós-instalação completa (APT, Flatpak, drivers) |
+| 2 | `pos-instalacao/modelos.sh` | Cria modelos de arquivo no Nemo (Office, PHP, HTML, Shell) |
+| 3 | `apps-install/apps-manager.sh` | Gestão de apps, limpeza profunda, sync de temas GTK |
+| 4 | `apps-install/apps-install.sh` | Loja customizada de Flatpaks |
+| 5 | `manager.sh` | Instala `update-system` como comando global |
 
 ---
 
 ## Estrutura do projeto
 
 ```
-my-mint/
+manager-linux/
 ├── manager.sh              # Hub central — menu principal
 ├── utils.sh                # Biblioteca compartilhada (cores, funções, limpeza)
 ├── update-system.sh        # Manutenção completa do sistema (instalável globalmente)
@@ -32,7 +31,6 @@ my-mint/
 │   ├── pos-install.sh      # Pós-instalação (APT + Flatpak + drivers)
 │   └── modelos.sh          # Templates de arquivo para o Nemo
 └── apps-install/
-    ├── mint-pro.sh         # Otimizações e ferramentas gaming
     ├── apps-manager.sh     # Gerenciador de apps e limpeza
     └── apps-install.sh     # Loja interativa de Flatpaks
 ```
@@ -94,29 +92,15 @@ Tudo registrado em `~/manutencao_sistema.log`.
 
 ## Aplicativos disponíveis na loja (Flatpak)
 
-| Categoria      | Apps                                                       |
-| -------------- | ---------------------------------------------------------- |
-| Navegadores    | Firefox, Chromium, Zen Browser                             |
-| Design         | Inkscape, Krita, Lunacy, Penpot, MyPaint, Vara, Eyedropper |
-| Produtividade  | LibreOffice, ONLYOFFICE, Planify, Web Apps, Gear Lever     |
-| Dev / Rede     | FileZilla, Meld                                            |
-| Utilidades     | Parabolic (yt-dlp GUI), AnyDesk                            |
-| Educação       | Tux Paint, GCompris                                        |
-| Script externo | Linux Toys                                                 |
-
----
-
-## Gaming (mint-pro.sh)
-
-Focado em hardware AMD, mas parte das otimizações serve para qualquer configuração:
-
-- **Swappiness** reduzida para 10 (menos swap, mais RAM para jogos)
-- **ZRAM** para compressão de memória em tempo real
-- **Driver AMDGPU** com suporte a Vulkan e DXVK (incluindo GPUs GCN 1.0+)
-- **GameMode**, **MangoHud**, **Goverlay** e **Piper**
-- **Steam** e **Heroic Games Launcher** via Flatpak
-- **Proton GE** via ProtonUp-NG
-- **Minecraft Bedrock Launcher**
+| Categoria | Apps |
+|-----------|------|
+| Navegadores | Firefox, Chromium, Zen Browser |
+| Design | Inkscape, Krita, Lunacy, Penpot, MyPaint, Vara, Eyedropper |
+| Produtividade | LibreOffice, ONLYOFFICE, Planify, Web Apps, Gear Lever |
+| Dev / Rede | FileZilla, Meld |
+| Utilidades | Parabolic (yt-dlp GUI), AnyDesk |
+| Educação | Tux Paint, GCompris |
+| Script externo | Linux Toys |
 
 ---
 
@@ -126,8 +110,8 @@ Este é um projeto pessoal e reflete minhas escolhas e necessidades específicas
 
 **Formas de contribuir:**
 
-- Abra uma _issue_ descrevendo um problema ou sugestão
-- Envie um _pull request_ com sua melhoria
+- Abra uma *issue* descrevendo um problema ou sugestão
+- Envie um *pull request* com sua melhoria
 - Adapte o projeto para o seu próprio uso
 
 Só peço que qualquer contribuição siga o estilo já estabelecido: funções centralizadas no `utils.sh`, paleta de cores padronizada via `COR_*`, e cabeçalhos de comentário completos em cada script.
@@ -140,4 +124,4 @@ MIT — use, modifique e distribua à vontade.
 
 ---
 
-_Feito por Kadu Velasco_
+*Feito por Kadu Velasco*

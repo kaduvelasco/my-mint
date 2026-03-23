@@ -94,10 +94,9 @@ while true; do
     show_header
     echo -e "  1) Executar Pós-Instalação (Mint 22.x)"
     echo -e "  2) Instalar Modelos de Arquivos (Office / PHP / Texto)"
-    echo -e "  3) Otimizar Performance (ZRAM / AMD / Swappiness)"
-    echo -e "  4) Gerenciar Aplicativos (Limpeza / Temas / Flatpaks)"
-    echo -e "  5) Instalar Aplicativos (Loja Customizada Flatpak)"
-    echo -e "  6) Instalar Comando 'update-system' Global"
+    echo -e "  3) Gerenciar Aplicativos (Limpeza / Temas / Flatpaks)"
+    echo -e "  4) Instalar Aplicativos (Loja Customizada Flatpak)"
+    echo -e "  5) Instalar Comando 'update-system' Global"
     echo -e "  0) Sair"
     echo -e "${COR_AZUL}------------------------------------------------------${COR_RESET}"
     read -rp "Escolha uma opção: " OPTION
@@ -105,12 +104,11 @@ while true; do
     case "${OPTION}" in
         1) run_sub "pos-instalacao/pos-install.sh" ;;
         2) run_sub "pos-instalacao/modelos.sh" ;;
-        3) run_sub "apps-install/mint-pro.sh" ;;
-        4) run_sub "apps-install/apps-manager.sh" ;;
-        5) run_sub "apps-install/apps-install.sh" ;;
-        6) install_update_global ;;
+        3) run_sub "apps-install/apps-manager.sh" ;;
+        4) run_sub "apps-install/apps-install.sh" ;;
+        5) install_update_global ;;
         0) echo -e "\n${COR_VERDE}Até logo!${COR_RESET}"; exit 0 ;;
-        *) print_warn "Opção inválida! Escolha entre 0 e 6."; sleep 1 ;;
+        *) print_warn "Opção inválida! Escolha entre 0 e 5."; sleep 1 ;;
     esac
 
     wait_enter
