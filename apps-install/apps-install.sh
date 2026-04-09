@@ -1,39 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# ===================================================================================
+# ==============================================================================
 # apps-install.sh — Loja Customizada de Aplicativos | Manager Linux
-# ===================================================================================
-# Autor      : Kadu Velasco
-# Projeto    : Manager Linux — Painel de Controle para Linux Mint 22.x
-# Versão     : 2.0.0
-# Atualizado : 2025
-# Licença    : MIT
-# -----------------------------------------------------------------------------------
-# DESCRIÇÃO:
-#   Loja interativa de aplicativos Flatpak com suporte a scripts externos.
-#   Funcionalidades:
-#     - Lista todos os apps disponíveis com indicação de instalados (✅)
-#     - Permite seleção individual por número ou instalação de todos ('all')
-#     - Instala Flatpaks em lote (mais eficiente que um por vez)
-#     - Executa scripts externos com confirmação antes da execução
+# ==============================================================================
+# Descrição   : Loja interativa de aplicativos Flatpak.
+#               Funcionalidades:
+#                 - Lista apps disponíveis com indicação de instalados (✅)
+#                 - Seleção individual por número ou instalação de todos ('all')
+#                 - Instalação em lote (mais eficiente que um por vez)
 #
 #   APPS DISPONÍVEIS (Flatpak via Flathub):
-#     Navegadores : Firefox, Chromium, Zen Browser
-#     Dev/Rede    : FileZilla, Meld
-#     Design      : Inkscape, Krita, Eyedropper, Lunacy, Penpot, MyPaint, Vara
-#     Produtividade: LibreOffice, ONLYOFFICE, Planify, Web Apps, Gear Lever
-#     Utilidades  : Parabolic (yt-dlp GUI), AnyDesk
-#     Educação    : Tux Paint, GCompris
+#     Navegadores  : Firefox, Chromium, Zen Browser
+#     Dev / Rede   : FileZilla, Meld
+#     Design       : Inkscape, Krita, Eyedropper, Lunacy, Penpot, MyPaint, Vara
+#     Produtividade: LibreOffice, ONLYOFFICE, Planify, Web Apps, Gear Lever,
+#                    Apostrophe
+#     Utilidades   : Parabolic (yt-dlp GUI), AnyDesk
+#     Educação     : Tux Paint, GCompris
 #
-#   SCRIPTS EXTERNOS:
-#     Linux Toys  : instala utilidades de terminal divertidas
-#
-# USO:
-#   bash apps-install.sh   (não requer root)
-#
-# DEPENDÊNCIAS:
-#   bash 5+, utils.sh (../../utils.sh ou diretório pai), flatpak
-# ===================================================================================
+# Uso         : bash apps-install.sh   (não requer root)
+# Dependências: bash 5+, utils.sh (diretório pai), flatpak
+# Versão      : 2.0.0
+# ==============================================================================
 
 set -euo pipefail
 
@@ -48,6 +36,7 @@ source "${SCRIPT_DIR}/../utils.sh"
 # Flatpaks: "Nome amigável" → "ID Flatpak no Flathub"
 declare -A FLATPAKS=(
     ["AnyDesk"]="com.anydesk.Anydesk"
+    ["Apostrophe"]="org.gnome.gitlab.somas.Apostrophe"
     ["Chromium"]="org.chromium.Chromium"
     ["Eyedropper"]="com.github.finefindus.eyedropper"
     ["FileZilla"]="org.filezillaproject.Filezilla"
@@ -71,9 +60,7 @@ declare -A FLATPAKS=(
 )
 
 # Scripts externos: "Nome amigável" → "comando a executar"
-declare -A SCRIPTS=(
-    ["Linux Toys"]="curl -fsSL https://linux.toys/install.sh | sh"
-)
+declare -A SCRIPTS=()
 
 # -----------------------------------------------------------------------------------
 # FUNÇÕES AUXILIARES
@@ -125,20 +112,20 @@ for i in "${!sorted_names[@]}"; do
     if [[ -n "${FLATPAKS[${local_name}]:-}" ]]; then
         local_id="${FLATPAKS[${local_name}]}"
         if is_flatpak_installed "${local_id}"; then
-            echo -e "  [${index}] ${COR_VERDE}${SIM_OK} ${local_name} (instalado)${COR_RESET}"
+            echo -e "  [${index}] ${VERDE}${SIM_OK} ${local_name} (instalado)${RESET}"
         else
             echo -e "  [${index}] ${local_name}"
         fi
     else
-        echo -e "  [${index}] ${local_name} ${COR_CIANO}(script externo)${COR_RESET}"
+        echo -e "  [${index}] ${local_name} ${AZUL}(script externo)${RESET}"
     fi
     MENU+=("${local_name}")
 done
 
 echo ""
 echo -e "  [all] Instalar todos os Flatpaks"
-echo -e "${COR_AZUL}------------------------------------------------------${COR_RESET}"
-read -rp "Digite os números (ex: 1 3 7) ou 'all': " -a SELECTIONS
+echo -e "${AZUL}──────────────────────────────────${RESET}"
+read -r -p "Digite os números (ex: 1 3 7) ou 'all': " -a SELECTIONS
 
 # -----------------------------------------------------------------------------------
 # PROCESSAMENTO DA SELEÇÃO

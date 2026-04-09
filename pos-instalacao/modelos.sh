@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ===================================================================================
 # modelos.sh — Instalador de Modelos de Arquivos | Manager Linux
@@ -46,71 +46,32 @@ readonly MODELOS_DIR="${HOME}/Modelos"
 # FUNÇÕES
 # -----------------------------------------------------------------------------------
 
-# Cria um arquivo Office (docx/xlsx/pptx) com estrutura ZIP mínima válida
-# Uso: criar_office_zip "Documento_Word.docx" "word"
+# Cria um arquivo .docx com estrutura ZIP mínima válida
+# Uso: criar_docx_minimo "Documento_Word.docx"
 criar_docx_minimo() {
     local destino="$1"
-    # Usa Python para gerar um .docx vazio mas válido
-    if command -v python3 &>/dev/null && python3 -c "import zipfile" &>/dev/null; then
-        python3 - <<'PYEOF'
-import zipfile, os, sys
-
-dest = sys.argv[1] if len(sys.argv) > 1 else "Documento.docx"
-
-content_types = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
-  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
-  <Default Extension="xml" ContentType="application/xml"/>
-  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
-</Types>'''
-
-rels = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
-</Relationships>'''
-
-document = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
-  <w:body><w:p/></w:body>
-</w:document>'''
-
-with zipfile.ZipFile(dest, 'w', zipfile.ZIP_DEFLATED) as z:
-    z.writestr('[Content_Types].xml', content_types)
-    z.writestr('_rels/.rels', rels)
-    z.writestr('word/document.xml', document)
-PYEOF
-        python3 /dev/stdin "${destino}" <<'PYEOF'
+    python3 - "${destino}" <<'PYEOF' 2>/dev/null || touch "${destino}"
 import zipfile, sys
-
 dest = sys.argv[1]
-
 content_types = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
   <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
   <Default Extension="xml" ContentType="application/xml"/>
   <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
 </Types>'''
-
 rels = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
   <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
 </Relationships>'''
-
 document = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:body><w:p/></w:body>
 </w:document>'''
-
 with zipfile.ZipFile(dest, 'w', zipfile.ZIP_DEFLATED) as z:
     z.writestr('[Content_Types].xml', content_types)
     z.writestr('_rels/.rels', rels)
     z.writestr('word/document.xml', document)
 PYEOF
-    else
-        # Fallback: arquivo vazio (compatibilidade básica)
-        touch "${destino}"
-        print_warn "python3 não encontrado. ${destino##*/} criado como arquivo vazio."
-    fi
 }
 
 criar_xlsx_minimo() {
@@ -210,7 +171,7 @@ EOF
 
 # Script Shell
 cat > "${MODELOS_DIR}/Script_Shell.sh" << 'EOF'
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Descrição: 
 # Uso: bash script.sh

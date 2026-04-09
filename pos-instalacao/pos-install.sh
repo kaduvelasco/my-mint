@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ===================================================================================
 # pos-install.sh — Pós-Instalação | Manager Linux
@@ -109,7 +109,6 @@ done
 
 # Etapa 2: Repositórios externos (PPA Fastfetch)
 print_header "🌐 Adicionando repositórios externos..."
-sudo rm -f /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock
 # PPA do Fastfetch (bleeding-edge); no Mint 22.x está disponível nos repos oficiais
 # mas o PPA garante versão mais recente
 add-apt-repository ppa:zhangsongcui3371/fastfetch -y

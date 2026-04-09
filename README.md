@@ -23,10 +23,11 @@ O `manager.sh` é o ponto de entrada: um menu interativo que organiza todas as t
 ## Estrutura do projeto
 
 ```
-manager-linux/
+my-mint/
 ├── manager.sh              # Hub central — menu principal
 ├── utils.sh                # Biblioteca compartilhada (cores, funções, limpeza)
 ├── update-system.sh        # Manutenção completa do sistema (instalável globalmente)
+├── default-bash-style.md   # Guia de estilo dos scripts
 ├── pos-instalacao/
 │   ├── pos-install.sh      # Pós-instalação (APT + Flatpak + drivers)
 │   └── modelos.sh          # Templates de arquivo para o Nemo
@@ -50,7 +51,7 @@ bash manager.sh
 **Para instalar o comando `update-system` globalmente** (e poder apagar o repositório depois):
 
 ```
-Escolha a opção 6 no menu principal.
+Escolha a opção 5 no menu principal.
 ```
 
 A partir daí, `update-system` funciona em qualquer terminal, independentemente do repositório.
@@ -96,11 +97,10 @@ Tudo registrado em `~/manutencao_sistema.log`.
 |-----------|------|
 | Navegadores | Firefox, Chromium, Zen Browser |
 | Design | Inkscape, Krita, Lunacy, Penpot, MyPaint, Vara, Eyedropper |
-| Produtividade | LibreOffice, ONLYOFFICE, Planify, Web Apps, Gear Lever |
+| Produtividade | LibreOffice, ONLYOFFICE, Planify, Web Apps, Gear Lever, Apostrophe |
 | Dev / Rede | FileZilla, Meld |
 | Utilidades | Parabolic (yt-dlp GUI), AnyDesk |
 | Educação | Tux Paint, GCompris |
-| Script externo | Linux Toys |
 
 ---
 
@@ -114,7 +114,7 @@ Este é um projeto pessoal e reflete minhas escolhas e necessidades específicas
 - Envie um *pull request* com sua melhoria
 - Adapte o projeto para o seu próprio uso
 
-Só peço que qualquer contribuição siga o estilo já estabelecido: funções centralizadas no `utils.sh`, paleta de cores padronizada via `COR_*`, e cabeçalhos de comentário completos em cada script.
+Só peço que qualquer contribuição siga o estilo já estabelecido: funções centralizadas no `utils.sh`, paleta de cores padronizada via `AZUL`/`VERDE`/`AMARELO`/`VERMELHO`/`RESET` (conforme `default-bash-style.md`), e cabeçalhos de comentário completos em cada script.
 
 ---
 

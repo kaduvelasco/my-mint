@@ -1,20 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# ===================================================================================
+# ==============================================================================
 # utils.sh — Biblioteca Compartilhada | Manager Linux
-# ===================================================================================
-# Autor      : Kadu Velasco
-# Projeto    : Manager Linux — Painel de Controle para Linux Mint 22.x
-# Versão     : 2.0.0
-# Atualizado : 2025
-# Licença    : MIT
-# -----------------------------------------------------------------------------------
-# DESCRIÇÃO:
-#   Biblioteca de funções e constantes compartilhadas por todos os scripts do
-#   projeto. Deve ser carregada via: source "$(dirname "${BASH_SOURCE[0]}")/utils.sh"
-#
-#   ATENÇÃO: Este arquivo NÃO deve ser executado diretamente.
-#
+# ==============================================================================
+# Descrição   : Funções e constantes compartilhadas por todos os scripts do
+#               projeto. ATENÇÃO: NÃO executar diretamente.
+# Uso         : source "$(dirname "${BASH_SOURCE[0]}")/utils.sh"
+# Versão      : 2.0.0
+# ==============================================================================
 # FUNÇÕES DISPONÍVEIS:
 #   print_header  <título>          — Cabeçalho de seção colorido
 #   print_ok      <mensagem>        — Mensagem de sucesso
@@ -30,75 +23,75 @@
 #   cleanup_flatpak                 — Remove runtimes não utilizados
 #   cleanup_logs  [dias]            — Vacuum do journald (padrão: 7 dias)
 #   cleanup_thumbnails              — Remove cache de thumbnails
-# ===================================================================================
+# ==============================================================================
 
 # Evita carregamento duplo
 [[ -n "${_UTILS_LOADED:-}" ]] && return 0
 _UTILS_LOADED=1
 
-# -----------------------------------------------------------------------------------
-# PALETA DE CORES (padrão único do projeto)
-# -----------------------------------------------------------------------------------
-readonly COR_AZUL='\033[0;34m'
-readonly COR_VERDE='\033[0;32m'
-readonly COR_AMARELO='\033[1;33m'
-readonly COR_VERMELHO='\033[0;31m'
-readonly COR_CIANO='\033[0;36m'
-readonly COR_RESET='\033[0m'
+# ==============================================================================
+# PALETA DE CORES
+# ==============================================================================
 
-# Símbolo de status
+export AZUL='\033[0;34m'
+export VERDE='\033[0;32m'
+export AMARELO='\033[1;33m'
+export VERMELHO='\033[0;31m'
+export RESET='\033[0m'
+
+# Símbolos de status
 readonly SIM_OK="✅"
 readonly SIM_ERRO="❌"
 readonly SIM_AVISO="⚠️ "
 readonly SIM_INFO="ℹ️ "
 readonly SIM_SETA="🚀"
 
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 # FUNÇÕES DE EXIBIÇÃO
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 
 # Cabeçalho de seção
 # Uso: print_header "Título da seção"
 print_header() {
-    echo -e "\n${COR_AZUL}======================================================${COR_RESET}"
-    echo -e " ${COR_VERDE}${1}${COR_RESET}"
-    echo -e "${COR_AZUL}======================================================${COR_RESET}\n"
+    echo -e "\n${AZUL}====================================${RESET}"
+    echo -e " ${VERDE}${1}${RESET}"
+    echo -e "${AZUL}====================================${RESET}\n"
 }
 
 # Mensagem de sucesso
 # Uso: print_ok "Operação concluída com sucesso"
 print_ok() {
-    echo -e "${COR_VERDE}${SIM_OK} ${1}${COR_RESET}"
+    echo -e "${VERDE}${SIM_OK} ${1}${RESET}"
 }
 
 # Mensagem de aviso (não interrompe)
 # Uso: print_warn "Verifique a configuração"
 print_warn() {
-    echo -e "${COR_AMARELO}${SIM_AVISO}${1}${COR_RESET}"
+    echo -e "${AMARELO}${SIM_AVISO} ${1}${RESET}"
 }
 
 # Mensagem de erro (não interrompe; para abortar use: print_err "..." && exit 1)
 # Uso: print_err "Arquivo não encontrado"
 print_err() {
-    echo -e "${COR_VERMELHO}${SIM_ERRO} ${1}${COR_RESET}" >&2
+    echo -e "${VERMELHO}${SIM_ERRO} ${1}${RESET}" >&2
 }
 
 # Mensagem informativa
 # Uso: print_info "Dica: use sudo para operações de sistema"
 print_info() {
-    echo -e "${COR_CIANO}${SIM_INFO} ${1}${COR_RESET}"
+    echo -e "${AZUL}${SIM_INFO} ${1}${RESET}"
 }
 
 # Pausa aguardando Enter
 # Uso: wait_enter
 wait_enter() {
-    echo -e "\n${COR_AZUL}Pressione Enter para continuar...${COR_RESET}"
-    read -r
+    echo -e "\n${AZUL}──────────────────────────────────${RESET}"
+    read -r -p "   Pressione Enter para continuar..."
 }
 
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 # FUNÇÕES DE VERIFICAÇÃO
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 
 # Aborta o script se não for executado como root
 # Uso: require_root
@@ -124,9 +117,9 @@ flatpak_ok() {
     command -v flatpak &>/dev/null
 }
 
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 # FUNÇÕES DE INSTALAÇÃO
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 
 # Instala um ou mais pacotes APT com DEBIAN_FRONTEND=noninteractive
 # Uso: apt_install curl wget git
@@ -134,9 +127,9 @@ apt_install() {
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"
 }
 
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 # FUNÇÕES DE LIMPEZA
-# -----------------------------------------------------------------------------------
+# ==============================================================================
 
 # Remove pacotes órfãos e limpa cache APT
 # Uso: cleanup_apt
